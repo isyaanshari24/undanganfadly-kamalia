@@ -1204,7 +1204,6 @@ Save the Date
 <img src="foto1.webp" class="big">
 <img src="foto2.webp" class="big">
 <img src="foto3.webp" class="big">
-<img src="foto4.webp" class="big">
 
 </div>
 <div>
@@ -1579,7 +1578,7 @@ document.getElementById("seconds").textContent = seconds;
   
 },1000);  
   
-const API_URL = "https://script.google.com/macros/s/AKfycbyaG79xBZ4mrtt5MQPGEd_3vl1tY6BVWWkzstbR32vOcrhJUgGFdCtCJcar42X_oUXV/exec";  
+const API_URL = "https://script.google.com/macros/s/AKfycbxM9gDTiujEDxotTmtAE9Osw5MYRN_C03l0FSL8MzHOtrXw6VgkX-w4KsqO4mOulddG/exec";  
   
 async function loadUcapan(){  
   
@@ -1652,32 +1651,38 @@ flashBtn(btn,"Gagal, salin manual");
 });
 }
     
-function addToCalendar(){  
-  
-const start = "20261108T090000";  
-const end = "20261108T120000";  
-  
-const title = "Wedding Fadly & Kamalia";  
-const location = "Lokasi Acara";  
-const details = "Our Wedding Day";  
-  
-const ua = navigator.userAgent;  
-const isIOS = /iPad|iPhone|iPod/.test(ua);  
-  
-if(isIOS){  
-  
-window.location.href = "wedding.ics";  
-  
-}else{  
-  
-const googleCalendar =  
-`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;  
-  
-window.open(googleCalendar,"_blank");  
-  
-}  
-    
-}  
+function addToCalendar(){
+
+const title = "Resepsi Pernikahan Fadly & Kamalia";
+const alamat = "Jl. Teluk Tiram Darat Gg ABC, Banjarmasin";
+const details = "Akad Nikah: Jumat, 6 November 2026 pukul 08:30 WITA. Resepsi: Minggu, 8 November 2026 pukul 09:00 WITA.";
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+if(isIOS){
+
+const ics = [
+"BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Fadlia//Undangan//ID","CALSCALE:GREGORIAN",
+"BEGIN:VEVENT","UID:akad-20261106@fadlia","DTSTAMP:20260101T000000Z",
+"DTSTART;TZID=Asia/Makassar:20261106T083000","DTEND;TZID=Asia/Makassar:20261106T110000",
+"SUMMARY:Akad Nikah Fadly & Kamalia","LOCATION:"+alamat,"END:VEVENT",
+"BEGIN:VEVENT","UID:resepsi-20261108@fadlia","DTSTAMP:20260101T000000Z",
+"DTSTART;TZID=Asia/Makassar:20261108T090000","DTEND;TZID=Asia/Makassar:20261108T120000",
+"SUMMARY:"+title,"LOCATION:"+alamat,"END:VEVENT","END:VCALENDAR"
+].join("\r\n");
+
+window.location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+
+}else{
+
+const googleCalendar =
+`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=20261108T090000/20261108T120000&ctz=Asia/Makassar&details=${encodeURIComponent(details)}&location=${encodeURIComponent(alamat)}`;
+
+window.open(googleCalendar,"_blank");
+
+}
+
+}
     function revealAll(){
 
 const elements = document.querySelectorAll("section *");
